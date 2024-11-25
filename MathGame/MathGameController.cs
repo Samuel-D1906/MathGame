@@ -42,6 +42,7 @@ public class MathGameController
     {
         int randomNumberMin = 0;
         int randomNumberMax = 10;
+        int points = 0;
         for (var i = 0; i < questions; i++)
         {
             switch (difficulty)
@@ -68,8 +69,14 @@ public class MathGameController
             var randomNumberTwo = random.Next(randomNumberMin, randomNumberMax);
             Console.WriteLine($"Question Number: {i + 1}");
             Console.WriteLine($"{randomNumberOne} {mathOperator} {randomNumberTwo}");
-            var answer = Console.ReadLine();
-            
+            var answer = int.Parse(Console.ReadLine()!);
+            if (mathOperator == "+")
+            {
+                if (answer == randomNumberOne + randomNumberTwo)
+                {
+                    points++;
+                }
+            }
         }
     }
 }
