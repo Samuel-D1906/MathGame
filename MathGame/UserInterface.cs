@@ -7,18 +7,16 @@ public class UserInterface
 {
     internal static void GetMenu()
     {
-        var isMenuRunning = true;
         var whichOperator = "";
-        while (isMenuRunning)
-        {
-            var userOption = AnsiConsole.Prompt(
-                new SelectionPrompt<Enums.MenuOptions>().Title("Which mode do you want to do?").AddChoices(
-                    Enums.MenuOptions.Addition,
-                    Enums.MenuOptions.Subtraction,
-                    Enums.MenuOptions.Multiplication,
-                    Enums.MenuOptions.Division,
-                    Enums.MenuOptions.Random,
-                    Enums.MenuOptions.Quit)); 
+        
+        var userOption = AnsiConsole.Prompt(
+            new SelectionPrompt<Enums.MenuOptions>().Title("Which mode do you want to do?").AddChoices(
+                Enums.MenuOptions.Addition,
+                Enums.MenuOptions.Subtraction,
+                Enums.MenuOptions.Multiplication, 
+                Enums.MenuOptions.Division, 
+                Enums.MenuOptions.Random, 
+                Enums.MenuOptions.Quit)); 
             
             string menuMessage;
 
@@ -45,14 +43,13 @@ public class UserInterface
                     MathGameController.MathGame(whichOperator);
                     break;
                 case Enums.MenuOptions.Quit:
-                    isMenuRunning = false;
                     break;
             }
         }
         
         
         
-    }
+    
 
     private static string  GetRandomOperator()
     { 
