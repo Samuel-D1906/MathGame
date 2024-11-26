@@ -2,8 +2,9 @@
 
 namespace MathGame;
 
-public class MathGameController
+public static class MathGameController
 {
+    private static List<string> _previousGameHistory = [];
     internal static void MathGame(string mathOperator)
     {
         var points = 0;
@@ -40,9 +41,9 @@ public class MathGameController
 
     private static void GameLoop(int questions, string mathOperator, string difficulty)
     {
-        int randomNumberMin = 0;
-        int randomNumberMax = 10;
-        int points = 0;
+        var randomNumberMin = 0;
+        var randomNumberMax = 10;
+        var points = 0;
         for (var i = 0; i < questions; i++)
         {
             switch (difficulty)
@@ -67,16 +68,78 @@ public class MathGameController
             var random = new Random();
             var randomNumberOne = random.Next(randomNumberMin, randomNumberMax);
             var randomNumberTwo = random.Next(randomNumberMin, randomNumberMax);
-            Console.WriteLine($"Question Number: {i + 1}");
-            Console.WriteLine($"{randomNumberOne} {mathOperator} {randomNumberTwo}");
-            var answer = int.Parse(Console.ReadLine()!);
-            if (mathOperator == "+")
+            
+            if (mathOperator == "/")
             {
-                if (answer == randomNumberOne + randomNumberTwo)
+                if (randomNumberOne % randomNumberTwo != 0 )
                 {
-                    points++;
+                    break;
+                }
+
+                Console.WriteLine($"Question Number: {i + 1}");
+                Console.WriteLine($"{randomNumberOne} {mathOperator} {randomNumberTwo}");
+            }
+            else
+            {
+                Console.WriteLine($"Question Number: {i + 1}");
+                Console.WriteLine($"{randomNumberOne} {mathOperator} {randomNumberTwo}");
+            }
+
+            try
+            {
+                var answer = int.Parse(Console.ReadLine()!);
+                switch (mathOperator)
+                {
+                    case "+":
+                        if (answer == randomNumberOne + randomNumberTwo)
+                        {
+                            points++;
+                        }
+                        break;
+                    case "-":
+                        if (answer == randomNumberOne - randomNumberTwo)
+                        {
+                            points++;
+                        }
+                        break;
+                    case "*":
+                        if (answer == randomNumberOne * randomNumberTwo)
+                        {
+                            points++;
+                        }
+                        break;
+                    case "/":
+                        if (answer == randomNumberOne / randomNumberTwo)
+                        {
+                            points++;
+                        }
+
+                        break;
                 }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
+            
         }
+
+        var gameLeaderboard = $"Difficulty: {difficulty}\t Points: {points}";
+        Console.WriteLine(gameLeaderboard);
+        _previousGameHistory.Add(gameLeaderboard);
+        UserInterface.GetMenu();
+    }
+    
+    internal static void GetList()
+    {
+        Console.WriteLine("Previous Games: \n" + string.Join("\n", _previousGameHistory));
+        UserInterface.GetMenu();
+        
+    }
+
+    internal static void DeleteList()
+    {
+        _previousGameHistory.Clear();
     }
 }

@@ -5,20 +5,17 @@ using Spectre.Console;
 
 public class UserInterface
 {
+    private static bool _isRunning = true;
     internal static void GetMenu()
     {
-        var whichOperator = "";
-        
-        var userOption = AnsiConsole.Prompt(
-            new SelectionPrompt<Enums.MenuOptions>().Title("Which mode do you want to do?").AddChoices(
-                Enums.MenuOptions.Addition,
-                Enums.MenuOptions.Subtraction,
-                Enums.MenuOptions.Multiplication, 
-                Enums.MenuOptions.Division, 
-                Enums.MenuOptions.Random, 
-                Enums.MenuOptions.Quit)); 
-            
-            string menuMessage;
+        while (_isRunning)
+        {
+            var whichOperator = "";
+
+            var userOption = AnsiConsole.Prompt(new SelectionPrompt<Enums.MenuOptions>()
+                .Title("Which mode do you want to do?").AddChoices(Enums.MenuOptions.Addition,
+                    Enums.MenuOptions.Subtraction, Enums.MenuOptions.Multiplication, Enums.MenuOptions.Division,
+                    Enums.MenuOptions.Random, Enums.MenuOptions.PreviousGames, Enums.MenuOptions.Quit));
 
             switch (userOption)
             {
@@ -42,14 +39,18 @@ public class UserInterface
                     whichOperator = GetRandomOperator();
                     MathGameController.MathGame(whichOperator);
                     break;
+                case Enums.MenuOptions.PreviousGames:
+                    MathGameController.GetList();
+                    continue;
                 case Enums.MenuOptions.Quit:
+                    MathGameController.DeleteList();
+                    Console.WriteLine("Goodbye!");
+                    _isRunning = false;
                     break;
             }
         }
-        
-        
-        
-    
+    }
+
 
     private static string  GetRandomOperator()
     { 
@@ -74,6 +75,8 @@ public class UserInterface
         }
         return whichOperator;
     }
-    
-    
 }
+
+
+
+    

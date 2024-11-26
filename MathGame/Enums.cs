@@ -9,6 +9,7 @@ public class Enums
         Multiplication,
         Division,
         Random,
+        PreviousGames,
         Quit
     }
 
