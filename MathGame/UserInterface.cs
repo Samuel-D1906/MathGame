@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-
+﻿
 namespace MathGame;
 using Spectre.Console;
 

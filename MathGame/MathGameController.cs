@@ -1,4 +1,6 @@
-﻿using Spectre.Console;
+﻿using System.Diagnostics;
+using Spectre.Console;
+using static MathGame.UserInterface;
 
 namespace MathGame;
 
@@ -44,6 +46,8 @@ public static class MathGameController
         var randomNumberMin = 0;
         var randomNumberMax = 10;
         var points = 0;
+        var stopWatch = new Stopwatch();
+        stopWatch.Start();
         for (var i = 0; i < questions; i++)
         {
             switch (difficulty)
@@ -124,11 +128,15 @@ public static class MathGameController
             
             
         }
-
-        var gameLeaderboard = $"Difficulty: {difficulty}\t Points: {points}";
+        stopWatch.Stop();
+        var time = stopWatch.Elapsed;
+        string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}",
+            time.Hours, time.Minutes, time.Seconds);
+        var gameLeaderboard = $"Difficulty: {difficulty}\t Points: {points} Time needed: {elapsedTime}";
         Console.WriteLine(gameLeaderboard);
         _previousGameHistory.Add(gameLeaderboard);
-        UserInterface.GetMenu();
+        
+        GetMenu();
     }
     
     internal static void GetList()
@@ -143,3 +151,6 @@ public static class MathGameController
         _previousGameHistory.Clear();
     }
 }
+
+
+
