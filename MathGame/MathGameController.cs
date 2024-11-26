@@ -6,7 +6,7 @@ namespace MathGame;
 
 public static class MathGameController
 {
-    private static List<string> _previousGameHistory = [];
+    private static readonly List<string> PreviousGameHistory = [];
     internal static void MathGame(string mathOperator)
     {
         var points = 0;
@@ -130,25 +130,24 @@ public static class MathGameController
         }
         stopWatch.Stop();
         var time = stopWatch.Elapsed;
-        string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}",
-            time.Hours, time.Minutes, time.Seconds);
+        var elapsedTime = $"{time.Hours:00}:{time.Minutes:00}:{time.Seconds:00}";
         var gameLeaderboard = $"Difficulty: {difficulty}\t Points: {points} Time needed: {elapsedTime}";
         Console.WriteLine(gameLeaderboard);
-        _previousGameHistory.Add(gameLeaderboard);
+        PreviousGameHistory.Add(gameLeaderboard);
         
         GetMenu();
     }
     
     internal static void GetList()
     {
-        Console.WriteLine("Previous Games: \n" + string.Join("\n", _previousGameHistory));
-        UserInterface.GetMenu();
+        Console.WriteLine("Previous Games: \n" + string.Join("\n", PreviousGameHistory));
+        GetMenu();
         
     }
 
     internal static void DeleteList()
     {
-        _previousGameHistory.Clear();
+        PreviousGameHistory.Clear();
     }
 }
 
